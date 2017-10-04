@@ -1,0 +1,68 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+// $this->_helper->layout->disableLayout();
+//$this->disableRender();
+
+$this->inlineScript()->appendFile('/js/admin.js', 'text/javascript');
+$this->headScript()->appendFile('/js/admin.js', 'text/javascript');
+ //$this->_helper->viewRenderer->setNoRender(true);
+ //$this->_helper->layout->disableLayout();
+?>
+
+    
+ 
+                            
+                            <table class="table">
+                                <tr class="row">
+                                    <th class="col-sm-4">id</th>
+                                    <th class="col-sm-4">Rola</th>
+                                    <th class="col-sm-4">Rola nadrzędna</th>
+                                </tr>
+
+                                <?php if($this->userroles!=NULL){ foreach ($this->userroles as $userrole) :  ?>
+                                    <tr id='userrole_<?=$userrole['id']?>' class="row waslrow"> <!--onclick='selectedRow("<?//=$userrole['id'] ?>"); ' -->
+                                         <td class="col-sm-4"><?= $this->escapeHtml($userrole['id']) ?></td>
+                                        <td class="col-sm-4"><?= $this->escapeHtml($userrole['role']) ?></td>
+                                        <td class="col-sm-4"><?= $this->escapeHtml($userrole['parent_role']) ?></td>                     
+                                    </tr>
+                                <?php endforeach; }?>
+
+                            </table>
+
+
+ <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:15px 10px;">
+            <h1>Dodaj role</h1>       
+        </div>
+        <div class="modal-body" style="padding:10px 10px;">
+         <div class="form-group">
+            <label for="sel1">Lista ról:</label>
+            <select multiple class="form-control" id="sel1">
+              <?php foreach ($this->role as $rola) : ?>
+                <option value="<?= $rola->id?>"><?= $rola->role ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-secondary btn-default panel-btn-right" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Anuluj</a> 
+          <a class="btn btn-primary btn-default panel-btn-right" data-dismiss="modal"  onclick='saveUsersRole();'><span class="glyphicon glyphicon-remove"></span>  Dodaj</a> 
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+
+
+<script>
+
+    </script>

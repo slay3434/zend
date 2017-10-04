@@ -1,0 +1,74 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+use Admin\Auth\Adapter as WaslAdapter;
+
+function wasl_drawMenu($page)
+{
+    if ($page->hasPages()):
+    
+        echo '<li class="dropdown wasl-dropdown dropdown-submenu "><a href="'.$page->getHref().'" target="'.$page->getTarget().'">'.$page->getLabel();
+        echo '<span class="caret"></span>';
+        echo '<ul class="dropdown-menu">';
+        foreach ($page->getPages() as $child):
+            wasl_drawMenu($child);
+            endforeach;
+        
+        echo '</ul>';
+                
+        echo '</a></li>';
+  
+    else:
+        
+//     echo '<li class="'.($page->getLabel()=='Logowanie'?'nav navbar-nav navbar-right ':'').'dropdown-submenu '
+//        . '"><a href="'.$page->getHref().'" target="'.$page->getTarget().'">'
+//            . ($page->getLabel()=='Logowanie'?'<span class="glyphicon glyphicon-log-in"></span> ':'')
+//            . ''.$page->getLabel().'</a></li>';
+        
+
+        if($page->getLabel()=='Logowanie'):
+            getLoginButton($page);
+        else:
+            echo '<li class="dropdown-submenu '
+            . '"><a href="'.$page->getHref().'" target="'.$page->getTarget().'">'        
+                . ''.$page->getLabel().'</a></li>';
+        endif;;
+    
+    endif; 
+}
+
+function getLoginButton($page)
+{
+    
+    if(WaslAdapter::getlogresult()->getCode()!=1):
+        echo '<li class="nav navbar-nav navbar-right dropdown-submenu '
+        . '"><a href="'.$page->getHref().'" target="'.$page->getTarget().'">'
+            .'<span class="glyphicon glyphicon-log-in"></span> '
+            . ''.$page->getLabel().'</a></li>';
+    else:
+        echo '<li class="nav navbar-nav navbar-right dropdown-submenu '
+        . '"><a href="/admin/logout" target="'.$page->getTarget().'">'
+            .'<span class="glyphicon glyphicon-log-out"></span> '
+            . 'Wyloguj</a></li>';
+    endif;
+}
+
+//if(WaslAdapter::getlogresult()->getCode()==1)
+//   echo "<script type='text/javascript'>alert('zalogowany')</script>";
+?>
+
+
+    <ul class="nav navbar-nav" style='width:100%'>
+
+        <?php foreach ($this->container as $page):
+            /** @var Zend\Navigation\Page\AbstractPage $page */ ?>            
+                
+           <?php wasl_drawMenu($page); ?>
+        <?php endforeach; ?>
+
+    </ul>
+

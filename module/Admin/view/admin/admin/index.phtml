@@ -1,0 +1,181 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+// $layout = $this->layout();
+// $layout->setTemplate('/layout/layoutnobreadcrumbs');
+$this->inlineScript()->appendFile('/js/admin.js', 'text/javascript');
+//$this->headScript()->appendFile('/js/admin.js', 'text/javascript');
+
+?>
+
+
+<div class="container">
+    <div class="row">
+        
+        <div class="col-md-2 col-sm-2">
+        
+         
+                    <div class='panel panel-default '>
+
+                        <div class="panel-heading">
+                            Menu administracyjne
+                        </div>
+                        <div class="panel-body waslmenu">
+                            <ul class="nav">
+                                <li><a  data-toggle="collapse" href="#uzytkownicy" onclick="selectAdminMenu('user')">Użytkownicy</a></li>
+                                <li><a  data-toggle="collapse" href="#role" onclick="selectAdminMenu('role')">Role</a></li>
+                                <li><a data-toggle="collapse" href="#uprawnienia" onclick="selectAdminMenu('permission')">Uprawnienia</a></li>
+                            </ul>
+                        </div>     
+
+                    </div>
+         
+        </div>
+
+        <div class="col-md-10 col-sm-10" id="accordion">
+
+                 <div class="panel panel-default" >
+                    <div id="uzytkownicy" data-parent="#accordion" class="panel-collapse collapse <?php echo $this->selectedmenu === "user" ? 'in' : '' ?>">
+                        <div class="panel-body"> 
+                            <div class='panel panel-default'>
+                                <div class='panel-heading'>    
+                                    <h1>Użytkownicy     
+                                        <a class='btn btn-default panel-btn-right' href="<?= $this->url('admin', ['action' => 'deleteuser']) ?>">Usuń</a>  
+                                        <a class='btn btn-default panel-btn-right' href="<?= $this->url('admin', ['action' => 'edituser']) ?>">Edytuj</a>                                                                       
+                                        <a class='btn btn-default panel-btn-right' href="<?= $this->url('admin', ['action' => 'adduser']) ?>">Nowy</a>
+                                    </h1>
+                                </div>
+                            </div>
+                            
+                            <table class="table">
+                                <tr class="row">
+                                    <th class="col-sm-4">id</th>
+                                    <th class="col-sm-8">Login</th>
+                                </tr>
+
+                                <?php foreach ($this->users as $user) :  ?>
+                             
+                                   <tr id='user_<?=$user->id?>' onclick=' getUserRoles("<?=$user->id ?>"); ' class="row waslrow"><!-- selectedRow("<?//=$user->id ?>");-->
+                                        <td class="col-sm-4"><?= $this->escapeHtml($user->id) ?></td>
+                                        <td class="col-sm-4"><?= $this->escapeHtml($user->login) ?></td>                     
+                                    </tr>
+                          
+                                <?php endforeach; ?>
+
+                            </table>
+                            
+                            
+                            
+                          <!--Role uzytkownika-->
+                          
+                             <div class='panel panel-default'>
+                                <div class='panel-heading'>    
+                                    <h1>Role użytkownika                                       
+                                        <a class='btn btn-default panel-btn-right' onclick="removeUserRole();">Usuń</a>                              
+                                        <a class='btn btn-default panel-btn-right' id="myBtn">Dodaj</a>                                       
+                                    </h1>
+                                </div>
+                            </div>
+                          <div id="userroles">
+                              Brak danych
+                          </div>
+                            
+                            
+                            
+                                                
+                        </div>
+                    </div>
+                    <div id="role" data-parent="#accordion" class="panel-collapse collapse <?php echo $this->selectedmenu === "role" ? 'in' : '' ?>">
+                        <div class="panel-body">
+                            
+                             <div class='panel panel-default'>
+                                <div class='panel-heading'>    
+                                    <h1>Role                                        
+                                        <a class='btn btn-default panel-btn-right' href="<?= $this->url('admin', ['action' => 'deleterole']) ?>">Usuń</a>
+                                        <a class='btn btn-default panel-btn-right' href="<?= $this->url('admin', ['action' => 'editrole']) ?>">Edytuj</a>
+                                        <a class='btn btn-default panel-btn-right' href="<?= $this->url('admin', ['action' => 'addrole']) ?>">Nowy</a>                                       
+                                    </h1>
+                                </div>
+                            </div>
+                            
+                            <table class="table">
+                                <tr class="row">
+                                    <th class="col-sm-4">id</th>
+                                    <th class="col-sm-4">Rola</th>
+                                    <th class="col-sm-4">Rola nadrzędna</th>
+                                </tr>
+
+                                <?php  foreach ($this->roles as $role) :  ?>
+                                    <tr id='role_<?=$role->id?>' class="row waslrow" onclick='getRolesPermissions("<?=$role->id ?>"); '>
+                                         <td class="col-sm-4"><?= $this->escapeHtml($role->id) ?></td>
+                                        <td class="col-sm-4"><?= $this->escapeHtml($role->role) ?></td>
+                                        <td class="col-sm-4"><?= $this->escapeHtml($role->parent_role) ?></td>                     
+                                    </tr>
+                                <?php endforeach;?>
+
+                            </table>
+                            
+                            <!--uprawnienia roli -->
+                              <div class='panel panel-default'>
+                                <div class='panel-heading'>    
+                                    <h1>Uprawnienia roli                                       
+                                        <a class='btn btn-default panel-btn-right' onclick="removeRolesPermission();">Usuń</a>                              
+                                        <a class='btn btn-default panel-btn-right' id='permissionsBtnModal'>Dodaj</a>                                       
+                                    </h1>
+                                </div>
+                            </div>
+                          <div id="rolespermissions">
+                              Brak danych
+                          </div>
+                            
+                            
+                            
+                            
+                        
+                        </div>
+                    </div>
+                    <div id="uprawnienia" data-parent="#accordion" class="panel-collapse collapse <?php echo $this->selectedmenu === "permission" ? 'in' : '' ?>">
+                       <div class="panel-body">
+                           
+                              <div class='panel panel-default'>
+                                <div class='panel-heading'>    
+                                    <h1>Uprawnienia
+                                        <a class='btn btn-default panel-btn-right' href="<?= $this->url('admin', ['action' => 'deletepermission']) ?>">Usuń</a>
+                                        <a class='btn btn-default panel-btn-right' href="<?= $this->url('admin', ['action' => 'editpermission']) ?>">Edytuj</a>                                     
+                                        <a class='btn btn-default panel-btn-right' href="<?= $this->url('admin', ['action' => 'addpermission']) ?>">Nowy</a>
+                                        
+                                    </h1>
+                                </div>
+                            </div>
+                            
+                            <table class="table">
+                                <tr class="row">
+                                    <th class="col-sm-4">id</th>
+                                    <th class="col-sm-4">Uprawnienie</th>    
+                                    <th class="col-sm-4">Moduł</th>   
+                                </tr>
+
+                                <?php foreach ($this->permissions as $permission) :  ?>
+                                    <tr id='permission_<?=$permission->id?>' class="row waslrow">
+                                        <td class="col-sm-4"><?= $this->escapeHtml($permission->id) ?></td>      
+                                        <td class="col-sm-4"><?= $this->escapeHtml($permission->permission) ?></td>      
+                                        <td class="col-sm-4"><?= $this->escapeHtml($permission->module) ?></td>      
+                                    </tr>
+                                <?php endforeach; ?>
+
+                            </table>
+                       
+                       </div>
+                    </div>
+                 </div>
+        </div>      
+        
+        
+    </div>        
+</div>
+

@@ -1,0 +1,66 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
+
+
+$title = 'Edytuj uprawnienie roli';
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+<?php
+
+$permission = $form->get('permission');
+$permission->setAttribute('class', 'form-control');
+$permission->setAttribute('placeholder', 'Uprawnienie');
+
+$module = $form->get('module');
+$module->setAttribute('class', 'form-control');
+$module->setAttribute('placeholder', 'Moduł aplikacji');
+
+//$parent_role = $form->get('arent_role');
+//$parent_role->setAttribute('class', 'form-control');
+//$parent_role->setAttribute('placeholder', 'Rola nadrzędna');
+
+$submit = $form->get('submit');
+$submit->setAttribute('class', 'btn btn-primary');
+
+$cancel = $form->get('cancel');
+$cancel->setAttribute('class', 'btn btn-secondary');
+
+$form->setAttribute('action', $this->url('admin', ['action' => 'editpermission']));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+?>
+<?php // Wrap the elements in divs marked as form groups, and render the
+      // label, element, and errors separately within ?>
+
+
+<div class="form-group">
+    <?= $this->formLabel($permission) ?>
+    <?= $this->formElement($permission) ?>
+    <?= $this->formElementErrors()->render($permission, ['class' => 'help-block']) ?>
+</div>
+
+
+<div class="form-group">
+    <?= $this->formLabel($module) ?>
+    <?= $this->formElement($module) ?>
+     <?= $this->formElementErrors()->render($module, ['class' => 'help-block']) ?>
+ 
+</div>
+
+<div class="form-group">
+    <?= $this->formSubmit($submit);?>
+    <?=  $this->formSubmit($cancel) ?>
+</div>
+<?php
+echo $this->formHidden($form->get('id'));
+
+echo $this->form()->closeTag();

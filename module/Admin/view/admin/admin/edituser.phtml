@@ -1,0 +1,55 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+$title = 'Edytuj użytkownika';
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+<?php
+$login = $form->get('login');
+$login->setAttribute('class', 'form-control');
+$login->setAttribute('placeholder', 'Login');
+
+$password = $form->get('password');
+$password->setAttribute('class', 'form-control');
+$password->setAttribute('placeholder', 'Hasło');
+
+$submit = $form->get('submit');
+$submit->setAttribute('class', 'btn btn-primary');
+
+$cancel = $form->get('cancel');
+$cancel->setAttribute('class', 'btn btn-secondary');
+
+$form->setAttribute('action', $this->url('admin', [
+    'action' => 'edituser',
+    'id'     => $id,
+]));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+?>
+<div class="form-group">
+    <?= $this->formLabel($login) ?>
+    <?= $this->formElement($login) ?>
+    <?= $this->formElementErrors()->render($login, ['class' => 'help-block']) ?>
+</div>
+
+<div class="form-group">
+    <?= $this->formLabel($password) ?>
+    <?= $this->formElement($password) ?>
+    <?= $this->formElementErrors()->render($password, ['class' => 'help-block']) ?>
+</div>
+
+
+<div class="form-group">
+    <?=  $this->formSubmit($submit) ?>
+    <?=  $this->formSubmit($cancel) ?>
+    <?=  $this->formHidden($form->get('id')) ?>
+</div>
+<?php
+echo $this->form()->closeTag();

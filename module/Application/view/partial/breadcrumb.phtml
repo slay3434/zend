@@ -1,0 +1,30 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<ul class="breadcrumb">
+    <?php
+    // iterate through the pages
+    foreach ($this->pages as $key => $page):
+    ?>
+        <li>
+            <?php
+            // if this isn't the last page, add a link and the separator:
+            if ($key < count($this->pages) - 1):
+            ?>
+                <a href="<?= $page->getHref() ?>"><?= $page->getLabel() ?></a>
+            <?php
+            // otherwise, output the name only:
+            else:
+            ?>
+                <?= $page->getLabel() ?>
+            <?php endif; ?>
+        </li>
+    <?php endforeach; ?>
+</ul>
+

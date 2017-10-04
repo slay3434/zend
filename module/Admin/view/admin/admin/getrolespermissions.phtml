@@ -1,0 +1,72 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+// $this->_helper->layout->disableLayout();
+//$this->disableRender();
+
+$this->inlineScript()->appendFile('/js/admin.js', 'text/javascript');
+$this->headScript()->appendFile('/js/admin.js', 'text/javascript');
+ //$this->_helper->viewRenderer->setNoRender(true);
+ //$this->_helper->layout->disableLayout();
+ //
+ //
+// foreach ( $this->rolespermissions as $value) {
+//    //echo print_r(array_values($value));
+//     echo $value['id'];
+     
+//}
+
+//echo print_r(array_values($this->rolespermissions));
+
+
+?>
+
+                            
+                             <table class="table">
+                                <tr class="row">
+                                    <th class="col-sm-4">id</th>
+                                    <th class="col-sm-4">Uprawnienie</th>    
+                                    <th class="col-sm-4">Moduł</th>   
+                                </tr>
+
+                                <?php if($this->rolespermissions!=null){foreach ($this->rolespermissions as $permission) :  ?>
+                                    <tr id='rolepermission_<?=$permission['id']?>' class="row waslrow">
+                                        <td class="col-sm-4"><?= $this->escapeHtml($permission['id']) ?></td>      
+                                        <td class="col-sm-4"><?= $this->escapeHtml($permission['permission']) ?></td>      
+                                        <td class="col-sm-4"><?= $this->escapeHtml($permission['module']) ?></td>      
+                                    </tr>
+                                <?php endforeach; }?>
+
+                            </table>
+
+
+ <div class="modal fade" id="permissionsModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:15px 10px;">
+            <h1>Dodaj uprawnienia</h1>       
+        </div>
+        <div class="modal-body" style="padding:10px 10px;">
+         <div class="form-group">
+            <label for="permissionsSelector">Lista uprawnień w modułach:</label>
+            <select multiple class="form-control" id="permissionsSelector">
+              <?php foreach ($this->permissions as $permission) : ?>
+                <option value="<?= $permission->id?>"><?= $permission->permission ?> - <?= $permission->module ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-secondary btn-default panel-btn-right" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Anuluj</a> 
+          <a class="btn btn-primary btn-default panel-btn-right" data-dismiss="modal"  onclick='saveRolesPermission();'><span class="glyphicon glyphicon-remove"></span>  Dodaj</a> 
+        </div>
+      </div>
+      
+    </div>
+  </div> 

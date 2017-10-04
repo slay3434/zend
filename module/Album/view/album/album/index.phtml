@@ -1,0 +1,88 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+// $layout = $this->layout();
+// $layout->setTemplate('/layout/layoutnobreadcrumbs');
+
+$this->headScript()->appendFile('/js/album.grid.js');
+$this->headScript()->appendFile('/js/kolor.js');
+//$this->headScript()->appendFile('/css/wasl.css');
+
+$title = 'Albumy';
+$this->headTitle($title);
+?>
+<div class='panel panel-default'>
+<div class='panel-heading'>    
+<h1><?= $this->escapeHtml($title) ?>
+
+<!--<p>-->
+ 
+    <a class='btn btn-default panel-btn-right' href="<?= $this->url('album', ['action' => 'add']) ?>">Nowy</a>
+    <a class='btn btn-default panel-btn-right' href="<?= $this->url('album', ['action' => 'edit']) ?>">Edytuj</a>
+    <a class='btn btn-default panel-btn-right' href="<?= $this->url('album', ['action' => 'delete']) ?>">Usuń</a>
+
+<!--</p>-->
+</h1>
+</div>
+ 
+<div style="height:250px; overflow:auto;">
+<table class="table">
+<tr class="row">
+    <th class="col-sm-4">id</th>
+    <th class="col-sm-4">Tytuł</th>
+    <th class="col-sm-4">Artysta</th>
+    <!--<th>&nbsp;</th>-->
+</tr>
+
+<?php /*paginator foreach ($albums as $album) :*/ ?>
+<?php foreach ($this->paginator as $album) :  ?>
+    <tr id='album_<?=$album->id?>' onclick='selectedRow("<?=$album->id ?>"); ' class="row">
+        <td class="col-sm-4"><?= $this->escapeHtml($album->id) ?></td>
+        <td class="col-sm-4"><?= $this->escapeHtml($album->title) ?></td>
+        <td class="col-sm-4"><?= $this->escapeHtml($album->artist) ?></td>
+    </tr>
+<?php endforeach; ?>
+ 
+</table>
+</div>
+   
+<center>
+<?= $this->paginationControl(
+    // The paginator object:
+    $this->paginator,
+    // The scrolling style: all, elastic, jumping, sliding
+    'sliding',
+    // The partial to use to render the control:
+    'partial/paginator',
+    // The route to link to when a user clicks a control link:
+    ['route' => 'album']
+) ?>
+</center>
+  
+</div>  
+
+<div class='panel panel-default'>
+<div class='panel-heading'> 
+<h1><?= $this->escapeHtml("Kolory") ?>
+<!--<p>-->
+    <a class='btn btn-default panel-btn-right' href="<?= $this->url('album', ['action' => 'addkolor']) ?>">New</a>
+    <a class='btn btn-default panel-btn-right' href="<?= $this->url('album', ['action' => 'editkolor']) ?>">Edit</a>
+    <a class='btn btn-default panel-btn-right' href="<?= $this->url('album', ['action' => 'deletekolor']) ?>">Delete</a>
+<!--</p>-->
+</h1>
+</div>
+<div id="kolorGrid" class='panel-default'></div>
+</div>
+<script type='text/javascript'>getKoloryGrid();</script>
+
+
+<p>
+    <a href="<?= $this->url('pojazd') ?>">Pojazdy</a>
+</p>
+
+ 

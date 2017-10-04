@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/tmp/zend/project2_mvc/module/Admin/view/admin/admin/getuserroles.phtml</file>
+            <file>file:/C:/tmp/zend/project2_mvc/module/Application/view/layout/layout.phtml</file>
+            <file>file:/C:/tmp/zend/project2_mvc/module/Admin/src/Module.php</file>
+            <file>file:/C:/tmp/zend/project2_mvc/public/js/admin.js</file>
+            <file>file:/C:/tmp/zend/project2_mvc/module/Admin/view/admin/admin/deleteuserrole.phtml</file>
+            <file>file:/C:/tmp/zend/project2_mvc/module/Admin/src/Controller/AdminController.php</file>
+            <file>file:/C:/tmp/zend/project2_mvc/module/Admin/view/admin/admin/index.phtml</file>
+            <file>file:/C:/tmp/zend/project2_mvc/module/Admin/view/admin/admin/getrolespermissions.phtml</file>
+        </group>
+    </open-files>
+</project-private>

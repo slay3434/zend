@@ -1,0 +1,47 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+$title = 'Edit kolor';
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+<?php
+$kolor = $form->get('kolor');
+$kolor->setAttribute('class', 'form-control');
+$kolor->setAttribute('placeholder', 'Kolor');
+
+
+$submit = $form->get('submit');
+$submit->setAttribute('class', 'btn btn-primary');
+
+$cancel = $form->get('cancel');
+$cancel->setAttribute('class', 'btn btn-secondary');
+
+$form->setAttribute('action', $this->url('album', [
+    'action' => 'editKolor',
+    'id'     => $id,
+]));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+?>
+<div class="form-group">
+    <?= $this->formLabel($kolor) ?>
+    <?= $this->formElement($kolor) ?>
+    <?= $this->formElementErrors()->render($kolor, ['class' => 'help-block']) ?>
+</div>
+
+
+<div class="form-group">
+    <?=  $this->formSubmit($submit) ?>
+    <?=  $this->formSubmit($cancel) ?>
+    <?=  $this->formHidden($form->get('id')) ?>
+    <?=  $this->formHidden($form->get('idAlbum')) ?>
+</div>
+<?php
+echo $this->form()->closeTag();

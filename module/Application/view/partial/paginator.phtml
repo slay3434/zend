@@ -1,0 +1,65 @@
+<?php // in module/Application/view/partial/paginator.phtml: ?>
+<?php if ($this->pageCount): ?>
+<div>
+  <ul class="pagination">
+      
+      <!--poczatek listy-->
+   <li >
+        <a href="<?= $this->url($this->route, [], ['query' => ['page' => 1]]) ?>">
+            &lt;&lt;
+        </a>
+   </li>
+      
+  <!-- Previous page link -->
+  <?php if (isset($this->previous)): ?>
+    <li>
+      <a href="<?= $this->url($this->route, [], ['query' => ['page' => $this->previous]]) ?>">
+        &lt;
+      </a>
+    </li>
+  <?php else: ?>
+    <li class="disabled">
+      <a href="#">
+        &lt;
+      </a>
+    </li>
+  <?php endif ?>
+
+  <!-- Numbered page links -->
+  <?php foreach ($this->pagesInRange as $page): ?>
+    <?php if ($page !== $this->current): ?>
+      <li>
+        <a href="<?= $this->url($this->route, [], ['query' => ['page' => $page]]) ?>">
+          <?= $page ?>
+        </a>
+      </li>
+    <?php else: ?>
+      <li class="active">
+        <a href="#"><?= $page ?></a>
+      </li>
+    <?php endif ?>
+  <?php endforeach ?>
+
+  <!-- Next page link -->
+  <?php if (isset($this->next)): ?>
+    <li>
+      <a href="<?= $this->url($this->route, [], ['query' => ['page' => $this->next]]) ?>">
+        &gt;
+      </a>
+    </li>
+  <?php else: ?>
+    <li class="disabled">
+      <a href="#">
+        &gt;
+      </a>
+    </li>
+  <?php endif ?>
+    <!--koniec listy-->
+     <li >
+      <a href="<?= $this->url($this->route, [], ['query' => ['page' => $this->pageCount]]) ?>">
+        &gt;&gt;
+      </a>
+    </li>
+  </ul>
+</div>
+<?php endif ?>

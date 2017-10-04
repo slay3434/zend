@@ -1,0 +1,59 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+// $this->_helper->layout->disableLayout();
+//$this->disableRender();
+
+
+ //$this->_helper->viewRenderer->setNoRender(true);
+ //$this->_helper->layout->disableLayout();
+?>
+
+    
+<?php 
+
+if($this->paginatorkolor->count() >0 ):
+echo '
+<div style="height:240px; overflow:auto; ">
+<table class="table">
+    <tr class="row">
+        <th class="col-sm-4">id</th>
+        <th class="col-sm-4">idAlbum</th>
+        <th class="col-sm-4">Kolor</th>
+   
+    </tr>';
+else :
+    echo '<div class="nodata">Brak danych.</div>';
+endif;
+
+?>
+<?php foreach ($this->paginatorkolor as $kolor) :  ?>
+    <tr id='kolor_<?=$kolor->id?>' onclick='selectKolor(<?= $kolor->id?>)' class="row">
+        <td class="col-sm-4"><?= $this->escapeHtml($kolor->id) ?></td>
+        <td class="col-sm-4"><?= $this->escapeHtml($kolor->idAlbum) ?></td>
+        <td class="col-sm-4"><?= $this->escapeHtml($kolor->kolor) ?></td>
+    </tr>
+<?php endforeach; ?>
+</table>
+</div>
+
+
+<center>
+<?=
+    $this->paginationControl(
+    // The paginator object:
+    $this->paginatorkolor,
+    // The scrolling style: all, elastic, jumping, sliding
+    'sliding',
+    // The partial to use to render the control:
+    'partial/paginatorkolory',
+    // The route to link to when a user clicks a control link:
+    ['route' => 'album']
+)
+
+?>
+</center>

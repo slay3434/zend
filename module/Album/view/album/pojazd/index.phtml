@@ -1,0 +1,22 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?><p>Widok pojazdu<p>
+    
+    <table class="table">
+    <?php foreach ($albums as $album) : ?>
+    <tr id='album_<?=$album->id?>' onclick='selectedRow("<?=$album->id ?>"); getKoloryGrid("<?=$album->id ?>")'>
+        <td><?= $this->escapeHtml($album->title) ?></td>
+        <td><?= $this->escapeHtml($album->artist) ?></td>
+        <td>
+            <a href="<?= $this->url('album', ['action' => 'edit', 'id' => $album->id]) ?>">Edit</a>
+            <a href="<?= $this->url('album', ['action' => 'delete', 'id' => $album->id]) ?>">Delete</a>
+        </td>
+    </tr>
+<?php endforeach; ?>
+    </table>
